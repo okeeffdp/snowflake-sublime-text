@@ -1,0 +1,84 @@
+%YAML 1.2
+---
+# See http://www.sublimetext.com/docs/3/syntax.html
+name: Snowflake
+file_extensions:
+  - snowql
+scope: source.snowflake
+contexts:
+  main:
+    # Strings begin and end with quotes, and use backslashes as an escape
+    # character
+    - match: "'"
+      scope: punctuation.definition.string.begin.snowflake
+      push: single_quoted_string
+
+    # Comments begin with a '//' and finish at the end of the line
+    - match: '--'
+      scope: punctuation.definition.comment.snowflake
+      push: line_comment
+
+    - match: '\/\*'
+      scope: punctuation.definition.comment.snowflake
+      push: multiline_comment
+
+    - match: ';'
+      scope: punctuation.terminator.snowflake
+
+    # Keywords are if, else for and while.
+    # Note that blackslashes don't need to be escaped within single quoted
+    # strings in YAML. When using single quoted strings, only single quotes
+    # need to be escaped: this is done by using two single quotes next to each
+    # other.
+    - match: '\b(?i:alter account|alter api integration|alter column|alter database|alter external function|alter external table|alter file format|alter function|alter integration|alter masking policy|alter materialized view|alter network policy|alter notification integration|alter pipe|alter procedure|alter resource monitor|alter role|alter schema|alter security integration|alter sequence|alter session|alter share|alter stage|alter storage integration|alter stream|alter table|alter task|alter user|alter view|alter warehouse|begin|call|clone|comment|commit|constraint|copy into|create api integration|create database|create external function|create external table|create file format|create function|create integration|create managed account|create masking policy|create materialized view|create network policy|create notification integration|create pipe|create procedure|create resource monitor|create role|create schema|create security integration|create sequence|create share|create stage|create storage integration|create stream|create table|create task|create user|create view|create warehouse|delete|describe external table|describe file format|describe function|describe integration|describe masking policy|describe materialized view|describe network policy|describe pipe|describe procedure|describe result|describe sequence|describe share|describe stage|describe stream|describe table|describe task|describe user|describe view|drop database|drop external table|drop file format|drop function|drop integration|drop managed account|drop masking policy|drop materialized view|drop network policy|drop pipe|drop procedure|drop resource monitor|drop role|drop schema|drop sequence|drop share|drop stage|drop stream|drop table|drop task|drop user|drop view|drop warehouse|explain|from role|from share|get|grant ownership|grant role|insert|list|merge|put|remove|revoke|revoke|revoke role|rollback|set|show columns|show databases|show delegated authorizations|show external functions|show external tables|show file formats|show functions|show global accounts|show grants|show integrations|show locks|show managed accounts|show masking policies|show materialized views|show network policies|show objects|show parameters|show pipes|show procedures|show regions|show replication accounts|show replication databases|show resource monitors|show roles|show schemas|show sequences|show shares|show stages|show streams|show tables|show tasks|show transactions|show user functions|show users|show variables|show views|show warehouses|to role|to share|truncate materialized view|truncate table|undrop database|undrop schema|undrop table|unset|update|use database|use role|use schema|use warehouse)\b'
+      scope: keyword.control.snowflake
+
+    - match: '\b(?i:true|false|null)\b'
+      scope: constant.language.snowflake
+    # Numbers
+    - match: '\b(\d+\.?\d*)\b'
+      scope: constant.numeric.snowflake
+
+    - match: '(\+|\-|\*|\/|\%)'
+      scope: keyword.operator.arithmetic.snowflake
+
+    - match: '(=|!=|<>|<=|<|>=|>)'
+      scope: keyword.operator.comparison.snowflake
+
+    - match: '\b(?i:all|and|any|asc|between|desc|exists|except|in|intersect|minus|not|or|union)\b'
+      scope: keyword.operator.word.snowflake
+
+
+    - match: '\b(select|having)\b'
+      scope: keyword.parameter
+
+    - match: '\b(?i:as|intersect|minus|except|union)\b'
+      scope: keyword.context.snowflake
+
+    - match: '\b(?i:number|decimal|numeric|int|integer|bigint|smallint|float|float4|float8|double|double precision|real|varchar|char|character|string|text|binary|varbinary|boolean|date|datetime|time|timestamp|timestamp_ltz|timestamp_ntz|timestamp_tz|variant|object|array|geography)\b'
+      scope: storage.type.snowflake
+
+  single_quoted_string:
+    - meta_scope: string.quoted.single.snowflake
+
+    - match: '\\.'
+      scope: constant.character.escape.snowflake
+
+    - match: "'"
+      scope: punctuation.definition.string.end.snowflake
+      pop: true
+
+  line_comment:
+    - meta_scope: comment.line.snowflake
+
+    # Within this scope new keywords can be highlighted
+    - match: '\b(TODO|DEV|PROD|FIX|BUG|NOTE|FIXME)\b'
+      scope: markup.other.snowflake
+
+    - match: '$'
+      pop: true
+
+  multiline_comment:
+    - meta_scope: comment.line.snowflake
+    - match: '\*\/'
+      pop: true
