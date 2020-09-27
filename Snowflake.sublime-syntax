@@ -13,10 +13,18 @@ contexts:
       scope: punctuation.definition.string.begin.snowflake
       push: single_quoted_string
 
+    - match: '"'
+      scope: punctuation.definition.string.begin.snowflake
+      push: double_quoted_string
+
     # Comments begin with a '//' and finish at the end of the line
     - match: '--'
       scope: punctuation.definition.comment.snowflake
-      push: line_comment
+      push: dash_line_comment
+
+    - match: '\/\/'
+      scope: punctuation.definition.comment.snowflake
+      push: slash_line_comment
 
     - match: '\/\*'
       scope: punctuation.definition.comment.snowflake
@@ -30,7 +38,7 @@ contexts:
     # strings in YAML. When using single quoted strings, only single quotes
     # need to be escaped: this is done by using two single quotes next to each
     # other.
-    - match: '\b(?i:alter account|alter api integration|alter column|alter database|alter external function|alter external table|alter file format|alter function|alter integration|alter masking policy|alter materialized view|alter network policy|alter notification integration|alter pipe|alter procedure|alter resource monitor|alter role|alter schema|alter security integration|alter sequence|alter session|alter share|alter stage|alter storage integration|alter stream|alter table|alter task|alter user|alter view|alter warehouse|begin|call|clone|comment|commit|constraint|copy into|create api integration|create database|create external function|create external table|create file format|create function|create integration|create managed account|create masking policy|create materialized view|create network policy|create notification integration|create pipe|create procedure|create resource monitor|create role|create schema|create security integration|create sequence|create share|create stage|create storage integration|create stream|create table|create task|create user|create view|create warehouse|delete|describe external table|describe file format|describe function|describe integration|describe masking policy|describe materialized view|describe network policy|describe pipe|describe procedure|describe result|describe sequence|describe share|describe stage|describe stream|describe table|describe task|describe user|describe view|drop database|drop external table|drop file format|drop function|drop integration|drop managed account|drop masking policy|drop materialized view|drop network policy|drop pipe|drop procedure|drop resource monitor|drop role|drop schema|drop sequence|drop share|drop stage|drop stream|drop table|drop task|drop user|drop view|drop warehouse|explain|from role|from share|get|grant ownership|grant role|insert|list|merge|put|remove|revoke|revoke|revoke role|rollback|set|show columns|show databases|show delegated authorizations|show external functions|show external tables|show file formats|show functions|show global accounts|show grants|show integrations|show locks|show managed accounts|show masking policies|show materialized views|show network policies|show objects|show parameters|show pipes|show procedures|show regions|show replication accounts|show replication databases|show resource monitors|show roles|show schemas|show sequences|show shares|show stages|show streams|show tables|show tasks|show transactions|show user functions|show users|show variables|show views|show warehouses|to role|to share|truncate materialized view|truncate table|undrop database|undrop schema|undrop table|unset|update|use database|use role|use schema|use warehouse)\b'
+    - match: '\b(?i:alter account|alter api integration|alter column|alter database|alter external function|alter external table|alter file format|alter function|alter integration|alter masking policy|alter materialized view|alter network policy|alter notification integration|alter pipe|alter procedure|alter resource monitor|alter role|alter schema|alter security integration|alter sequence|alter session|alter share|alter stage|alter storage integration|alter stream|alter table|alter task|alter user|alter view|alter warehouse|begin|call|clone|comment|commit|constraint|copy into|create api integration|create database|create external function|create external table|create file format|create function|create integration|create managed account|create masking policy|create materialized view|create network policy|create notification integration|create pipe|create procedure|create resource monitor|create role|create schema|create security integration|create sequence|create share|create stage|create storage integration|create stream|create table|create task|create user|create view|create warehouse|delete|describe external table|describe file format|describe function|describe integration|describe masking policy|describe materialized view|describe network policy|describe pipe|describe procedure|describe result|describe sequence|describe share|describe stage|describe stream|describe table|describe task|describe user|describe view|drop database|drop external table|drop file format|drop function|drop integration|drop managed account|drop masking policy|drop materialized view|drop network policy|drop pipe|drop procedure|drop resource monitor|drop role|drop schema|drop sequence|drop share|drop stage|drop stream|drop table|drop task|drop user|drop view|drop warehouse|explain|from role|from share|get|grant ownership|grant role|insert|list|merge|put|remove|resume|revoke|revoke|revoke role|rollback|set|show columns|show databases|show delegated authorizations|show external functions|show external tables|show file formats|show functions|show global accounts|show grants|show integrations|show locks|show managed accounts|show masking policies|show materialized views|show network policies|show objects|show parameters|show pipes|show procedures|show regions|show replication accounts|show replication databases|show resource monitors|show roles|show schemas|show sequences|show shares|show stages|show streams|show tables|show tasks|show transactions|show user functions|show users|show variables|show views|show warehouses|suspend|to role|to share|truncate materialized view|truncate table|undrop database|undrop schema|undrop table|unset|update|use database|use role|use schema|use warehouse)\b'
       scope: keyword.control.snowflake
 
     - match: '\b(?i:true|false|null)\b'
@@ -45,18 +53,35 @@ contexts:
     - match: '(=|!=|<>|<=|<|>=|>)'
       scope: keyword.operator.comparison.snowflake
 
-    - match: '\b(?i:all|and|any|asc|between|desc|exists|except|in|intersect|minus|not|or|union)\b'
+    - match: '\b(?i:all|and|any|asc|(not\s+)?between|desc|exists|except|(not\s+)?in|intersect|is\s+(not\s+)?distinct from|is\s+(not\s+)?|minus|not|or|union)\b'
       scope: keyword.operator.word.snowflake
 
+    - match: '\b(?i:as|at|before|case|changes|connect by|else|end|from|group by|group by cube|group by grouping sets|group by rollup|having|join|limit|order by|pivot|qualify|sample|select|tablesample|then|unpivot|values|when|where|with)\b'
+      scope: keyword.control.snowflake
 
-    - match: '\b(select|having)\b'
-      scope: keyword.parameter
-
-    - match: '\b(?i:as|intersect|minus|except|union)\b'
-      scope: keyword.context.snowflake
+    - match: '\b(?i:(top)\s+(\d+))\b'
+      captures :
+        1 : keyword.control.snowflake
+        2 : constant.numeric..snowflake
 
     - match: '\b(?i:number|decimal|numeric|int|integer|bigint|smallint|float|float4|float8|double|double precision|real|varchar|char|character|string|text|binary|varbinary|boolean|date|datetime|time|timestamp|timestamp_ltz|timestamp_ntz|timestamp_tz|variant|object|array|geography)\b'
       scope: storage.type.snowflake
+
+    - match: '\b(?i:abs|acos|acosh|asin|asinh|atan|atan2|atanh|cbrt|ceil|cos|cosh|cot|degrees|div0|exp|factorial|floor|haversine|ln|log|mod|pi|pow|power|radians|round|sign|sin|sinh|sqrt|square|tan|tanh|truncate|trunc)\b'
+      scope: support.function.udf.mathematic.snowflake
+
+    - match: '\b(?i:add_months|convert_timezone|date_from_parts|date_part|date_trunc|dateadd|datediff|dayname|extract|hour|minute|second|last_day|monthname|next_day|previous_day|time_from_parts|time_slice|timeadd|timediff|timestamp_from_parts|timestampadd|timestampdiff|trunc|year|yearofweek|yearofweekiso|day|dayofmonth|dayofweek|dayofweekiso|dayofyear|week|weekofyear|weekiso|month|quarter|month|quarter)\b'
+      scope: support.function.udf.date.snowflake
+
+    - match: '\b(?i:any_value|approx_count_distinct|approx_percentile|approx_percentile_accumulate|approx_percentile_combine|approx_percentile_estimate|approx_top_k|approx_top_k_accumulate|approx_top_k_combine|approx_top_k_estimate|approximate_jaccard_index|approximate_similarity|array_agg|avg|bitand_agg|bitor_agg|bitxor_agg|booland_agg|boolor_agg|boolxor_agg|corr|count|count_if|covar_pop|covar_samp|grouping|grouping_id|hash_agg|hll|hll_accumulate|hll_combine|hll_estimate|hll_export|hll_import|kurtosis|listagg|median|min|max|minhash|minhash_combine|mode|object_agg|percentile_cont|percentile_disc|regr_avgx|regr_avgy|regr_count|regr_intercept|regr_r2|regr_slope|regr_sxx|regr_sxy|regr_syy|skew|stddev|stddev_pop|stddev_samp|sum|var_pop|var_samp|variance|variance_samp|variance_pop)\b'
+      scope: support.function.udaf.snowflake
+
+    - match: '\b(?i:ascii|base64_decode_binary|base64_decode_string|base64_encode|bit_length|charindex|chr|char|collate|collation|compress|concat|concat_ws|contains|decompress_binary|decompress_string|editdistance|endswith|hex_decode_binary|hex_decode_string|hex_encode|ilike|ilike any|initcap|insert|left|length|len|like|like all|like any|lower|lpad|ltrim|md5|md5_hex|md5_binary|octet_length|parse_ip|parse_url|position|regexp|regexp_count|regexp_instr|regexp_like|regexp_replace|regexp_substr|repeat|replace|reverse|right|rlike|rpad|rtrim|rtrimmed_length|sha1|sha1_hex|sha1_binary|sha2|sha2_hex|sha2_binary|soundex|space|split|split_part|split_to_table|startswith|strtok|strtok_split_to_table|substr|substring|translate|trim|try_base64_decode_binary|try_base64_decode_string|try_hex_decode_binary|try_hex_decode_string|unicode|upper|uuid_string)\b'
+      scope: support.function.udf.string.snowflake
+
+    - match: '\b(?i:booland|boolnot|boolor|boolxor|case|coalesce|decode|equal_null|greatest|iff|ifnull|least|nullif|nullifzero|nvl|nvl2|regr_valx|regr_valy|zeroifnull)\b'
+      scope: support.function.udf.conditional.snowflake
+  # Comments and strings
 
   single_quoted_string:
     - meta_scope: string.quoted.single.snowflake
@@ -68,7 +93,27 @@ contexts:
       scope: punctuation.definition.string.end.snowflake
       pop: true
 
-  line_comment:
+  double_quoted_string:
+    - meta_scope: string.quoted.double.snowflake
+
+    - match: '\\.'
+      scope: constant.character.escape.snowflake
+
+    - match: '"'
+      scope: punctuation.definition.string.end.snowflake
+      pop: true
+
+  dash_line_comment:
+    - meta_scope: comment.line.snowflake
+
+    # Within this scope new keywords can be highlighted
+    - match: '\b(TODO|DEV|PROD|FIX|BUG|NOTE|FIXME)\b'
+      scope: markup.other.snowflake
+
+    - match: '$'
+      pop: true
+
+  slash_line_comment:
     - meta_scope: comment.line.snowflake
 
     # Within this scope new keywords can be highlighted
