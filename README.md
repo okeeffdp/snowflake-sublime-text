@@ -1,11 +1,11 @@
-snowflake-sublime-text
-==================
+# snowflake-sublime-text
+----------------------
 
 [Snowflake](https://www.snowflake.com/) syntax highlighting for Sublime Text 3.
 
 # Install
 
-## Package Control
+## Package Control (Recommended)
 
 This is the easiest way to install the plugin.
 
@@ -13,7 +13,7 @@ This is the easiest way to install the plugin.
 2. `Package Control: Install Package`
 3. Look for `Snowflake` in the packages list
 
-## Manual - Git
+## Manually with Git
 
 1. Locate your `Packages` directory in Sublime Text (for instance `Preferences > Browse Packages ...`).
 2. Clone the repository in this directory
@@ -26,3 +26,7 @@ This is the easiest way to install the plugin.
 The plugin automatically activates Snowflake syntax highlighting for extensions:
 
  * .snowql
+
+# Feedback
+
+Feedback is welcome. Please open an issue [here on Github](https://github.com/okeeffdp/snowflake-sublime-text/issues).
