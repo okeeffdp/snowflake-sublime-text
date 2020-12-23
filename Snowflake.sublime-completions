@@ -1,0 +1,10 @@
+{
+    "scope": "source.snowflake",
+    "completions": [
+        "SELECT",
+        "FROM",
+        "NULL",
+        "TRUE",
+        "FALSE"
+    ]
+}
