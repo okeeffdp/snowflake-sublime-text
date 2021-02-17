@@ -71,7 +71,7 @@ create or replace table monthly_sales(empid int, amount int, month text)
     (2, 4500, 'APR');
 
 select
-  empid as emp_id,
+  distinct empid as emp_id,
   case
     when month = 'JAN' then 'january' else month
   end,
@@ -93,9 +93,9 @@ create table collation_demo (
   utf8_phrase varchar collate 'utf8',
   english_phrase varchar collate 'en',
   spanish_phrase varchar collate 'sp'
-  );
+);
 
-insert into collation_demo (uncollated_phrase, utf8_phrase, english_phrase, spanish_phrase) 
+insert into collation_demo (uncollated_phrase, utf8_phrase, english_phrase, spanish_phrase)
    values ('pinata', 'pinata', 'pinata', 'piñata');
 
 

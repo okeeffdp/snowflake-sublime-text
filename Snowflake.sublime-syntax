@@ -53,10 +53,10 @@ contexts:
     - match: '(=|!=|<>|<=|<|>=|>)'
       scope: keyword.operator.comparison.snowflake
 
-    - match: '\b(?i:all|and|any|asc|(not\s+)?between|desc|exists|except|(not\s+)?in|intersect|is\s+(not\s+)?distinct from|is\s+(not\s+)?|minus|not|or|union)\b'
+    - match: '\b(?i:all|and|any|asc|(not\s+)?between|desc|escape|exists|except|(not\s+)?in|intersect|is\s+(not\s+)?distinct from|is\s+(not\s+)?|minus|not|or|union)\b'
       scope: keyword.operator.word.snowflake
 
-    - match: '\b(?i:as|at|before|case|changes|connect by|cross|else|end|from|full|group by|group by cube|group by grouping sets|group by rollup|having|ilike|ilike any|insert|join|left|like|like all|like any|limit|natural|order by|pivot|qualify|on|outer|rlike|right|sample|select|tablesample|then|unpivot|using|values|when|where|with)\b'
+    - match: '\b(?i:as|at|before|case|changes|connect by|cross|distinct|else|end|from|full|group by|group by cube|group by grouping sets|group by rollup|having|ilike|ilike any|insert|join|left|like|like all|like any|limit|natural|order by|pivot|partition by|qualify|on|outer|rlike|right|sample|select|tablesample|then|unpivot|using|values|when|where|with)\b'
       scope: keyword.control.snowflake
 
     - match: '\b(?i:(top)\s+(\d+))\b'
@@ -91,6 +91,8 @@ contexts:
     - match: '\b(?i:cast|date|time|to_binary|to_boolean|to_char|to_date|to_decimal|to_double|to_number|to_numeric|to_time|to_timestamp|to_timestamp_ltz|to_timestamp_ntz|to_timestamp_tz|to_varchar|to_variant|try_cast|try_to_boolean|try_to_date|try_to_decimal|try_to_double|try_to_geography|try_to_binary|try_to_number|try_to_numeric|try_to_time|try_to_timestamp|try_to_timestamp_ltz|try_to_timestamp_ntz|try_to_timestamp_tz)\b'
       scope: support.function.udf.type-cast.snowflake
 
+    - match: '\b(?i:array_append|array_cat|array_compact|array_construct|array_construct_compact|array_contains|array_insert|array_intersection|array_position|array_prepend|array_size|array_slice|array_to_string|arrays_overlap|as_array|as_binary|as_char|as_date|as_decimal|as_double|as_integer|as_number|as_object|as_real|as_time|as_timestamp_ltz|as_timestamp_ntz|as_timestamp_tz|as_varchar|check_json|check_xml|flatten|get|get_ignore_case|get_path|is_array|is_binary|is_boolean|is_char|is_date|is_date_value|is_decimal|is_double|is_integer|is_null_value|is_object|is_real|is_time|is_timestamp_ltz|is_timestamp_ntz|is_timestamp_tz|is_varchar|json_extract_path_text|object_agg|object_construct|object_delete|object_insert|object_keys|object_pick|parse_json|parse_xml|strip_null_value|strtok_to_array|to_array|to_json|to_object|to_variant|to_xml|typeof|xmlget)\b'
+      scope: support.function.udf.collection.hive
   # Comments and strings
 
   single_quoted_string:
