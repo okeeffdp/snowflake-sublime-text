@@ -45,6 +45,7 @@
     "ILIKE ANY",
     "INSERT",
     "JOIN",
+    "INNER",
     "LEFT",
     "LIKE",
     "LIKE ALL",
