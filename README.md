@@ -45,6 +45,14 @@ Feedback is welcome. Please open an issue [here on Github](https://github.com/ok
 
 ---
 
+## Contributing
+
+Contributions are welcome. Please help to improve this extension.
+
+A list of contributors can be found here in the [AUTHORS.md](./AUTHORS.md)
+
+---
+
 ## Support
 
 If you found this extension useful and you'd like to buy me a coffee ☕ or beer 🍺, I have added some options below.
