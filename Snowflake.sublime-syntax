@@ -56,7 +56,7 @@ contexts:
     - match: '\b(?i:all|and|any|asc|(not\s+)?between|desc|escape|exists|except|(not\s+)?in|intersect|is\s+(not\s+)?distinct from|is\s+(not\s+)?|minus|not|or|union)\b'
       scope: keyword.operator.word.snowflake
 
-    - match: '\b(?i:as|at|before|case|changes|connect by|cross|distinct|else|end|from|full|group by|group by cube|group by grouping sets|group by rollup|having|ilike|ilike any|insert|join|left|like|like all|like any|limit|natural|order by|pivot|partition by|qualify|on|outer|rlike|right|sample|select|tablesample|then|unpivot|using|values|when|where|with)\b'
+    - match: '\b(?i:as|at|before|case|changes|connect by|cross|distinct|else|end|from|full|group by|group by cube|group by grouping sets|group by rollup|having|ilike|ilike any|insert|join|left|inner|like|like all|like any|limit|natural|order by|pivot|partition by|qualify|on|outer|rlike|right|sample|select|tablesample|then|unpivot|using|values|when|where|with)\b'
       scope: keyword.control.snowflake
 
     - match: '\b(?i:(top)\s+(\d+))\b'
